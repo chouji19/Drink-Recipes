@@ -1,3 +1,9 @@
+## Drink Recipes
+
+This app show the recipes of different drinks, you can filter by Ingredient or category
+
+Demo page 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
