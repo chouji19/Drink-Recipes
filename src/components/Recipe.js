@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react';
-import { ModalContext } from '../context/ModalContext'
-import Modal from '@material-ui/core/Modal';
+import {ModalContext} from '../context/ModalContext'
 import { makeStyles } from '@material-ui/core/styles';
-
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 
 function getModalStyle() {
     const top = 50 ;
@@ -16,18 +17,22 @@ function getModalStyle() {
 }
 
 const useStyles = makeStyles(theme => ({
-    paper: {
-      position: 'absolute',
-      width: 450,
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 const Recipe = ({recipe}) => {
     
-    const [modalStyle] = useState(getModalStyle)
     const [open, setOpen] = useState(false)
 
     const classes = useStyles();
@@ -50,18 +55,20 @@ const Recipe = ({recipe}) => {
         for (let i = 0; i < 16; i++) {
             if(data[`strIngredient${i}`]) {
                 ingredients.push(
-                    <li>{data[`strIngredient${i}`] } {data[`strMeasure${i}`] }</li>
+                    <li key={`data.idDrink${i}`}>{data[`strIngredient${i}`] } {data[`strMeasure${i}`] }</li>
                 )
             }       
         }
         return ingredients;
     }
 
+    const closeImg = {cursor:'pointer', float:'right', marginTop: '5px', width: '20px'};
+
     return ( 
         <div className="col-md-4 mb-3">
             <div className="card">
                 <h2 className="card-header">{strDrink}</h2>
-                <img className="card-img-top" src={strDrinkThumb} alt={`Image of ${strDrink}`} />
+                <img className="card-img-top" src={strDrinkThumb} alt={`${strDrink}`} />
                 <div className="card-body">
                     <button 
                         type="button"
@@ -72,26 +79,51 @@ const Recipe = ({recipe}) => {
                         }}
                     >Show Recipe</button>
                     <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
                         open={open}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                        timeout: 500,
+                        }}
                         onClose={() => {
                             setIdRecipe(null);
                             setRecipe({});
                             handleClose();
                         }
                         }
+                        title={
+                            <div>
+                                ABC 
+                                <img src='https://d30y9cdsu7xlg0.cloudfront.net/png/53504-200.png' style={closeImg}/>
+                            </div>
+                        }
                     >
-                        <div style={modalStyle} className={classes.paper}>
-                            <h2>{dataRecipe.strDrink}</h2>
-                            <h3 className="mt-4">Instructions: </h3>
-                            <p>
-                                {dataRecipe.strInstructions}
-                            </p>
-                            <img className="img-fluid my-4" src={dataRecipe.strDrinkThumb} />
-                            <h3>Ingredients/Measures</h3>
-                            <ul>
-                                {showIngredients(dataRecipe)}
-                            </ul>
-                        </div>
+                        <Fade in={open}>
+                            <div className={`${classes.paper} scrollDiv`}>
+                                <h2 id="transition-modal-title">{dataRecipe.strDrink}</h2>
+                                <h3 className="mt-4">Instructions: </h3>
+                                <div id="transition-modal-description">
+                                    {dataRecipe.strInstructions}
+                                </div>
+                                <img className="my-4 img-thumbnail" src={dataRecipe.strDrinkThumb} />
+                                <h3>Ingredients/Measures</h3>
+                                <ul>
+                                    {showIngredients(dataRecipe)}
+                                </ul>
+                                <button 
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                       setIdRecipe(null);
+                                        setRecipe({});
+                                        handleClose();
+                                    }}
+                                >Back to Recipes</button>
+                            </div>
+                        </Fade>
                     </Modal>
                 </div>
             </div>
