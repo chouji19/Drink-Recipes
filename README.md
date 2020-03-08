@@ -2,7 +2,7 @@
 
 This app show the recipes of different drinks, you can filter by Ingredient or category
 
-Demo page 
+[Demo page] (https://dazzling-rosalind-0f7d26.netlify.com/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
