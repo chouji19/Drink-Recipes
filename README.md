@@ -1,8 +1,18 @@
 ## Drink Recipes
 
+
+
+
+<p class="center">
+  <h3>Weather App using React JS</h3>
+  <a href="https://searchdrinkrecipes.netlify.app/">
+    <img src="https://www.datocms-assets.com/25958/1587026480-drinkrecipes.jpg?auto=format&dpr=0.2&w=1544" />
+  </a>
+</p>
+
 This app show the recipes of different drinks, you can filter by Ingredient or category
 
-[Demo page](https://dazzling-rosalind-0f7d26.netlify.com/)
+[Demo page](https://searchdrinkrecipes.netlify.app)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
